@@ -1,3 +1,5 @@
+% DOC xelatex
+
 \documentclass{mynotes}
 
 
@@ -11,6 +13,8 @@
 
 \keywords{interpolation, graph Laplacian, Riemann geometry}
 
+\input{shortcuts.tex}
+
 \begin{document}
 
 
@@ -18,9 +22,75 @@
 \maketitle
 
 
+\section{Initial definitions}
+
+\begin{definition}[Parametric family]
+      Let \( p \in [0; 1] \) be a real parameter for a family of square matrices \( A(p) \in \ds R^{n \times n} \) (such that each element \( a_{ij} = a_{ij}(p) \)). In order to simplify the discussion, we assume that \( \forall p: A^\top (p) = A (p) \) and each \( A(p )\) has real spectrum.
+\end{definition}
+
+The problem we want to deal with is the question of eigenspace interpolation: indeed, let \( A(p) \) first have only \emph{simple} eigenvalues; then, we aim to find first \( k \) eigenvectors of \( A(p) \) for every \( p \) given several exact estimations at \( \{ p_1, \dots p_N \}\). We denote the matrix composed of \( k\) first unit eigenvalues by \( C(p) \in \ds R^{n \times k} \), so 
+\begin{equation}
+      \begin{aligned}
+            C(p)^\top C(p) & = I_k \\
+            A(p) C(p) & =  C(p) \Lambda(p)
+      \end{aligned}
+      \label{eq:eig}
+\end{equation}
+such that \( \Lambda(p) = \diag \{ \lambda_1, \dots \lambda_k \} \) with \( \lambda_1 > \lambda_2 > \dots > \lambda_k \).
+
+We also adopt the convention \( X ( p_i ) = X_i \).
 
 
 
+\section{Two point problem}
+
+Let us assume we have only two point estimation \( ( A_0, C_0) \) and \( (A_1, C_1 ) \). How can we estimate \( C_{\alpha}\)?
+\begin{itemize}[itemsep = -5pt]
+      \item compute a polynomial estimation: \( C_\alpha = \alpha C_0 + (1 - \alpha ) C_1 \);
+      \item one needs \( C_\alpha \) to uphold \Cref{eq:eig}.
+\end{itemize}
+What do we make of \Cref{eq:eig}?
+\begin{equation}
+      \begin{aligned}
+            C_\alpha^\top C_\alpha & = \left( \alpha C_0 + (1 - \alpha ) C_1 \right)^\top \left( \alpha C_0 + (1 - \alpha ) C_1 \right) = \\
+            & = \alpha^2 C_0^\top C_0 + 2 \alpha (1-\alpha) \Sym( C_0^\top C_1 ) + (1-\alpha)^2 C_1^\top C_1 = \\
+            & = ( 1 - 2\alpha + 2 \alpha^2) I_k + 2 \alpha (1-\alpha) \Sym( C_0^\top C_1 )  = \\
+            & = I_k + 2 \alpha (1-\alpha) \Sym( C_0^\top C_1 - I_k )
+      \end{aligned}
+\end{equation}
+Additionally,
+\begin{equation}
+      \begin{aligned}
+            A_\alpha C_\alpha & = A_\alpha  \left( \alpha C_0 + (1 - \alpha ) C_1 \right) =  \alpha A_\alpha C_0 + (1 - \alpha ) A_\alpha C_1
+      \end{aligned}
+\end{equation}
+This is clearly not enough: we need \( A_\alpha C_\alpha = C_\alpha \Lambda_\alpha \) such that \( \Lambda_\alpha \) is diagonal. Instead, we can write \( C_\alpha^\top A_\alpha C_\alpha = \Lambda_\alpha \); so we would need \( C_\alpha^\top A_\alpha C_\alpha \) be as close to diagonal as possible:
+\begin{equation}
+      \begin{aligned}
+            C_\alpha^\top A_\alpha C_\alpha & = \left( \alpha C_0 + (1 - \alpha ) C_1 \right)^\top A_\alpha \left( \alpha C_0 + (1 - \alpha ) C_1 \right) = \\
+            & = \alpha^2 C_0^\top A_\alpha C_0 + (1-\alpha)^2 C_1^\top A_\alpha C_1 + \\
+            & + 2 \alpha (1-\alpha) \Sym( C_0^\top A_\alpha C_1 )
+      \end{aligned}
+\end{equation}
+Let \( \Delta A_0 = A_\alpha - A_0 \) and \( \Delta A_1 = A_\alpha - A_1 \), so:
+\begin{equation}
+      \begin{aligned}
+            C_0^\top A_\alpha C_0 & = C_0^\top \Delta A_0 C_0 + \Lambda_0 \\
+            C_1^\top A_\alpha C_1 & = C_1^\top \Delta A_0 C_1 + \Lambda_1 
+      \end{aligned}
+\end{equation}
+Can we inject something into \( C_0^\top A_\alpha C_1 + C_1^\top A_\alpha C_0 \)?
+\begin{equation}
+      \begin{aligned}
+            \Sym( C_0^\top A_\alpha C_1 ) & = \Sym( C_0^\top A_0 C_1 ) + \Sym( C_1^\top \Delta A_0 C_0 ) \\
+            \Sym( C_0^\top A_\alpha C_1 ) & = \Sym( C_0^\top A_1 C_1 ) + \Sym( C_1^\top \Delta A_1 C_0 )
+      \end{aligned}
+\end{equation}
+
+
+
+
+\newpage
 %% BIBLIOGRAPHY %% 
 \nocite{*}
 \bibliographystyle{alpha}

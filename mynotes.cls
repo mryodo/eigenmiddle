@@ -37,7 +37,7 @@
 
       % e-Mail
       \RequirePackage{authblk}
-      \newcommand*{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}} } 
+      \newcommand*{\email}[1]{\normalsize\href{mailto:#1}{\nolinkurl{#1}} } 
 
       % author and affiliation styling
       \renewcommand*{\Authsep}{ \( \color{black} \bullet \) }
@@ -122,10 +122,15 @@
       %\usepackage[T1]{fontenc}     
       %\usepackage{lmodern,mathrsfs}
       \usepackage{cmbright}
-      \usepackage{nunito}
+      \usepackage{fontspec}
+      \setmainfont[Scale=1.0]{Poppins ExtraLight}
+      \setsansfont[ BoldFont={Poppins Medium}, 
+       ItalicFont={Poppins ExtraLight Italic},
+       BoldItalicFont={Poppins Medium Italic}]{Poppins ExtraLight}
+      %\usepackage{nunito}
       %\usepackage{lato}
-      \renewcommand{\mddefault}{l}
-      \renewcommand{\bfdefault}{b}
+      %\renewcommand{\mddefault}{l}
+      %\renewcommand{\bfdefault}{b}
       %\usepackage[normalweight=Light]{mdsymbol}
 
       \makeatletter
@@ -510,7 +515,9 @@
       {}
       {}
       {0pt}
-      {\colorsection}
+      {
+      \colorsection
+      }
       %\titlespacing*{\section}{-2.5cm}{-0.5\baselineskip}{-1.25\baselineskip}
       \titlespacing*{\section}{-0.5cm}{-0.5\baselineskip}{-1.25\baselineskip}
 
@@ -520,9 +527,11 @@
      %       \end{mybox}
      % }
      \newcommand{\colorsection}[1]{%
+     \setlength{\parskip}{0pt}
      \begin{mybox2}{\thesection}
            \vspace{-2pt}\color{black}\bfseries \thesection.~#1
       \end{mybox2}
+      \setlength{\parskip}{7pt}
       }
 
       %\titleformat{name=\chapter}[block]
@@ -629,7 +638,7 @@
 
 \makeatletter
 \def\formatout#1{\hbox{\hskip1sp\m@th\llap{%
-    \normalcolor\small \color{jet!50!white}(Eqn.~#1) \hspace{0cm}}}}
+    \normalcolor\small \color{jet!50!white}(Eqn.~#1) \hspace{-1.5cm}}}}
 \let\oldmaketag@@@\maketag@@@
 \def\oldtagform@#1{\oldmaketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
 \renewcommand{\eqref}[1]{\textup{\oldtagform@{\ref{#1}}}}
